@@ -1,0 +1,17 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "nixpacks",
+    "buildCommand": "npm install && npm run build"
+  },
+  "deploy": {
+    "startCommand": "npm start",
+    "restartPolicyType": "on_failure",
+    "env": {
+      "NODE_ENV": "production",
+      "WHATSAPP_NUMBER": "212605706006",
+      "DATABASE_PATH": "./server/school.production.db",
+      "SEED_DEMO": "1"
+    }
+  }
+}

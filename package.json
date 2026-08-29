@@ -1,0 +1,28 @@
+{
+  "name": "quran-school-system",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "npm --prefix server install && tsc && vite build && node scripts/write-version.mjs",
+    "start": "node --experimental-sqlite server/src/server.js",
+    "preview": "vite preview --host"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "tsx": "^4.23.12",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.6"
+  }
+}
