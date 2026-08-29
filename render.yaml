@@ -6,7 +6,7 @@ services:
     runtime: node
     plan: free
     region: oregon
-    branch: main
+    branch: master
     buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
