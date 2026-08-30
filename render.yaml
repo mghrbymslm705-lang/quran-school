@@ -7,22 +7,16 @@ services:
     plan: free
     region: oregon
     branch: master
-    buildCommand: npm install && npm run build
-    startCommand: npm start
+    buildCommand: npm install && npm run build && cd server && npm install
+    startCommand: node --experimental-sqlite server/scripts/setup-production.js && node --experimental-sqlite server/src/server.js
     envVars:
       - key: NODE_ENV
         value: production
-      # JWT_SECRET: اضغط "Generate" في لوحة Render لقيمة عشوائية آمنة (يُحفظ ويبقى ثابتًا).
-      - key: JWT_SECRET
-        generateValue: true
+      - key: SETUP_USERNAME
+        value: admin
+      - key: SETUP_PASSWORD
+        value: Admin1234
       - key: WHATSAPP_NUMBER
         value: "212605706006"
-      # DATABASE_PATH: مسار ملف SQLite داخل الحاوية. على الخطة المجانية القرص مؤقت
-      # فتُفقد البيانات عند إعادة النشر؛ للثبات اربط قرصًا دائمًا واجعل المسار داخله.
       - key: DATABASE_PATH
         value: ./server/school.production.db
-      # APP_PUBLIC_URL: اتركه فارغًا ليُشتق تلقائيًا من اسم النطاق المُسند (onrender.com).
-      # SEED_DEMO=1: يُنشئ بيانات تجريبية وحساب admin/admin123 عند أول تشغيل فقط (للتجربة).
-      # للإنتاج الحقيقي: احذف هذا المتغير وشغّل setup-production بكلمة سر قوية.
-      - key: SEED_DEMO
-        value: "1"

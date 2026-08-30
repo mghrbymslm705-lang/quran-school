@@ -5,19 +5,10 @@ import { hashPassword } from './auth.js'
 import { uuid, todayStr } from './lib.js'
 
 function seed() {
-  // في الإنتاج نرفض البيانات التجريبية افتراضيًا لأسباب أمنية (لا حساب افتراضي).
-  // يُسمح بها فقط عند التجربة عبر المتغير SEED_DEMO=1 وعند أول تشغيل (قاعدة فارغة).
+  // ممنوع تشغيل بيانات تجريبية في الإنتاج (أمان): يتوقف بأمان مع رسالة واضحة.
   if (process.env.NODE_ENV === 'production') {
-    if (process.env.SEED_DEMO !== '1') {
-      console.log('[seed] إنتاج بدون SEED_DEMO — تخطٍّ الإنشاء التجريبي (استخدم setup-production لإنشاء المشرف).')
-      return
-    }
-    const anyUser = db.prepare('SELECT id FROM users LIMIT 1').get()
-    if (anyUser) {
-      console.log('[seed] إنتاج وقاعدة غير فارغة — تخطٍّ الإنشاء التجريبي.')
-      return
-    }
-    console.log('[seed] إنتاج مع SEED_DEMO=1 — إنشاء بيانات تجريبية أولية.')
+    console.error('[seed] ممنوع تشغيل بيانات تجريبية في بيئة الإنتاج. تم إيقاف التنفيذ بأمان.')
+    return
   }
   const existing = db.prepare("SELECT id FROM users WHERE username = 'admin'").get()
   if (existing) {
