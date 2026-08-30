@@ -5,13 +5,14 @@
     "buildCommand": "npm install && npm run build"
   },
   "deploy": {
-    "startCommand": "npm start",
+    "startCommand": "node --experimental-sqlite server/scripts/setup-production.js && node --experimental-sqlite server/src/server.js",
     "restartPolicyType": "on_failure",
     "env": {
       "NODE_ENV": "production",
+      "SETUP_USERNAME": "admin",
+      "SETUP_PASSWORD": "Admin1234",
       "WHATSAPP_NUMBER": "212605706006",
-      "DATABASE_PATH": "./server/school.production.db",
-      "SEED_DEMO": "1"
+      "DATABASE_PATH": "./server/school.production.db"
     }
   }
 }

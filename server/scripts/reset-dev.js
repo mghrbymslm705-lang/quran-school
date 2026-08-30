@@ -1,6 +1,6 @@
-// سكربت تفريغ قاعدة التطوير: يحذف كل البيانات التجريبية ثم ينشئ مشرفًا واحدًا
-// لتتمكن من الدخول وإدخال البيانات الحقيقية. يمنع إعادة التوليد التجريبي
-// لأن وجود مستخدم مشرف يجعل دالة seed تتخطى الإنشاء.
+// سكربت تفريغ قاعدة التطوير: يحذف كل البيانات ثم ينشئ مشرفًا واحدًا
+// ليتمكن من الدخول وإدخال البيانات الحقيقية.
+// الاستخدام: SETUP_USERNAME=admin SETUP_PASSWORD=xxx node scripts/reset-dev.js
 import fs from 'node:fs'
 import path from 'node:path'
 import { db } from '../src/db.js'
@@ -26,11 +26,13 @@ db.exec('PRAGMA foreign_keys = OFF')
 for (const t of TABLES) db.prepare(`DELETE FROM ${t}`).run()
 db.exec('PRAGMA foreign_keys = ON')
 
-// مشرف واحد لتسجيل الدخول (غيّر كلمته لاحقًا عبر الإعدادات أو سكربت منفصل)
+const username = process.env.SETUP_USERNAME || 'admin'
+const password = process.env.SETUP_PASSWORD || 'Admin1234'
+
 db.prepare(
   `INSERT INTO users (id, username, email, password_hash, full_name, role, status)
    VALUES (?, ?, ?, ?, ?, 'supervisor', 'active')`
-).run(uuid(), 'admin', null, hashPassword('admin123'), 'المشرف')
+).run(uuid(), username, null, hashPassword(password), 'المشرف')
 
 // تنظيف قاعدة الإنتاج إن وُجدت (لضمان بداية نظيفة)
 const prodPath = path.resolve(process.cwd(), '..', 'school.production.db')
@@ -39,5 +41,5 @@ if (fs.existsSync(prodPath)) {
   console.log('[reset] تم حذف قاعدة الإنتاج الموجودة')
 }
 
-console.log('[reset] تم حذف كل البيانات التجريبية. مشرف جاهز: admin / admin123')
+console.log(`[reset] تم حذف كل البيانات. مشرف جاهز: ${username}`)
 console.log('[reset] عدد المستخدمين الآن: ' + db.prepare('SELECT COUNT(*) c FROM users').get().c)
