@@ -214,6 +214,7 @@ export function AuditPage() {
       setCleanup((c) => ({ ...c, preview: p }))
     } catch (e) {
       setModalError(getErrorMessage(e, 'تعذّر معاينة السجلات'))
+      setCleanup((c) => ({ ...c, preview: null }))
     }
   }
   const onCleanupDelete = async () => {

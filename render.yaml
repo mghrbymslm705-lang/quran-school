@@ -13,9 +13,9 @@ services:
       - key: NODE_ENV
         value: production
       - key: SETUP_USERNAME
-        value: admin
+        value: miloud0000
       - key: SETUP_PASSWORD
-        value: Admin1234
+        value: miloud0000
       - key: WHATSAPP_NUMBER
         value: "212605706006"
       - key: DATABASE_PATH

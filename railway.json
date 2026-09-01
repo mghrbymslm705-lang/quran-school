@@ -9,8 +9,8 @@
     "restartPolicyType": "on_failure",
     "env": {
       "NODE_ENV": "production",
-      "SETUP_USERNAME": "admin",
-      "SETUP_PASSWORD": "Admin1234",
+      "SETUP_USERNAME": "miloud0000",
+      "SETUP_PASSWORD": "miloud0000",
       "WHATSAPP_NUMBER": "212605706006",
       "DATABASE_PATH": "./server/school.production.db"
     }
