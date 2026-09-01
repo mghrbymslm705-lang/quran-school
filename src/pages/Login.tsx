@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useLocation, Navigate } from 'react-router-dom'
 import { useAuth, defaultPathForRole } from '../auth/AuthContext'
-import { IconLogout, IconUser } from '../components/icons'
+import { IconLogout } from '../components/icons'
 
 export function Login() {
   const { user, login } = useAuth()
@@ -77,15 +77,8 @@ export function Login() {
           </button>
         </form>
 
-        <div className="demo-hint">
-          <div className="demo-hint-title">
-            <IconUser size={16} style={{ marginLeft: 6 }} />
-            حسابات تجريبية
-          </div>
-          <ul>
-            <li>مشرف: <code>admin</code> / <code>admin123</code></li>
-            <li>معلم: <code>teacher1</code> / <code>teacher123</code></li>
-          </ul>
+        <div className="auth-footer">
+          <a href="/about">تواصل معنا</a>
         </div>
       </div>
     </div>
