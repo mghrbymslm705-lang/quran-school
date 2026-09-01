@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useSchoolData } from '../data/useSchoolData'
 import { addTeacher, getCircles, getErrorMessage } from '../data/store'
 import { Modal, initials } from './ui'
-import { IconPlus, IconCircles, IconUser, IconSearch } from './icons'
+import { IconPlus, IconCircles, IconUser, IconSearch, IconBrandWhatsapp } from './icons'
+import { buildTeacherCredentialsMessage } from '../utils/appFeatures'
 
 function AddTeacherDialog({ onClose }: { onClose: () => void }) {
   const circles = useSchoolData((d) => d.circles)
@@ -18,6 +19,7 @@ function AddTeacherDialog({ onClose }: { onClose: () => void }) {
     circleIds: [] as string[]
   })
   const [error, setError] = useState('')
+  const [sent, setSent] = useState(false)
 
   const set = (k: keyof typeof form, v: string | boolean | string[]) => setForm((f) => ({ ...f, [k]: v }))
   const toggleCircle = (id: string) =>
@@ -25,6 +27,12 @@ function AddTeacherDialog({ onClose }: { onClose: () => void }) {
       ...f,
       circleIds: f.circleIds.includes(id) ? f.circleIds.filter((x) => x !== id) : [...f.circleIds, id]
     }))
+
+  const sendCredentials = () => {
+    const msg = buildTeacherCredentialsMessage(form.phone || '', form.username, form.password)
+    const link = 'https://wa.me/' + encodeURIComponent(form.phone || '212605706006') + '?text=' + encodeURIComponent(msg)
+    window.open(link, '_blank')
+  }
 
   const save = async () => {
     if (!form.name.trim() || !form.username.trim() || !form.password) {
@@ -42,7 +50,7 @@ function AddTeacherDialog({ onClose }: { onClose: () => void }) {
         active: form.active,
         circleIds: form.circleIds
       })
-      onClose()
+      setSent(true)
     } catch (e: any) {
       setError(getErrorMessage(e))
     }
@@ -53,14 +61,25 @@ function AddTeacherDialog({ onClose }: { onClose: () => void }) {
       title="إضافة معلم"
       onClose={onClose}
       footer={
-        <>
-          <button className="btn btn-primary" onClick={save}>
-            حفظ المعلم
-          </button>
-          <button className="btn btn-ghost" onClick={onClose}>
-            إلغاء
-          </button>
-        </>
+        sent ? (
+          <>
+            <button className="btn btn-primary" onClick={sendCredentials}>
+              إرسال بيانات الدخول عبر واتساب
+            </button>
+            <button className="btn btn-ghost" onClick={onClose}>
+              إغلاق
+            </button>
+          </>
+        ) : (
+          <>
+            <button className="btn btn-primary" onClick={save}>
+              حفظ المعلم
+            </button>
+            <button className="btn btn-ghost" onClick={onClose}>
+              إلغاء
+            </button>
+          </>
+        )
       }
     >
       {error && <div className="auth-error">{error}</div>}

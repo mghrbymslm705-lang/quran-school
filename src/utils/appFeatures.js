@@ -58,6 +58,18 @@ export function buildWhatsappLink(phone = WHATSAPP_NUMBER, message = defaultCont
   return 'https://wa.me/' + phone + '?text=' + encodeURIComponent(message)
 }
 
+// رسالة إرسال بيانات دخول المعلم عبر واتساب.
+export function buildTeacherCredentialsMessage(phone, username, password) {
+  return [
+    'السلام عليكم ورحمة الله وبركاته،',
+    'بيانات دخولك في منصة إدارة المدرسة القرآنية:',
+    'اسم المستخدم: ' + username,
+    'كلمة المرور: ' + password,
+    'للدخول اضغط على الرابط:',
+    location.origin || ''
+  ].join('\n')
+}
+
 /**
  * @param {string} [origin]
  * @returns {string}
