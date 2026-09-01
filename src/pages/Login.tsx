@@ -50,7 +50,7 @@ export function Login() {
               className="input"
               type="text"
               autoComplete="username"
-              placeholder="مثال: admin"
+               placeholder="مثال: miloud0000"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -76,10 +76,6 @@ export function Login() {
             {loading ? 'جارٍ الدخول…' : 'تسجيل الدخول'}
           </button>
         </form>
-
-        <div className="auth-footer">
-          <a href="/about">تواصل معنا</a>
-        </div>
       </div>
     </div>
   )

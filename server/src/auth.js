@@ -3,7 +3,10 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { db } from './db.js'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-me'
+const JWT_SECRET = process.env.JWT_SECRET || ''
+if (!JWT_SECRET) {
+  console.warn('[auth] JWT_SECRET غير مُعَيَّن. يُرجى تعيينه في متغيرات البيئة.')
+}
 const SALT_ROUNDS = 10
 
 export function hashPassword(plain) {
